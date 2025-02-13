@@ -22,6 +22,18 @@ import swapIcon from "./assets/99tech.jpg";
 const API_URL = "https://interview.switcheo.com/prices.json";
 const TOKEN_ICON_URL = "https://raw.githubusercontent.com/Switcheo/token-icons/main/tokens/";
 
+// Debounce Hook
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
 interface TokenData {
   currency: string;
   price: number;
@@ -35,6 +47,8 @@ export default function CurrencySwap() {
   const [convertedAmount, setConvertedAmount] = useState<string>("0");
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
   const [successOpen, setSuccessOpen] = useState<boolean>(false);
+
+  const debouncedAmount = useDebounce(amount, 500); // Apply 500ms debounce
 
   useEffect(() => {
     fetch(API_URL)
@@ -51,17 +65,17 @@ export default function CurrencySwap() {
   }, []);
 
   useEffect(() => {
-    if (fromToken && toToken && amount) {
+    if (fromToken && toToken && debouncedAmount) {
       const fromPrice = tokens.find((t) => t.currency === fromToken)?.price;
       const toPrice = tokens.find((t) => t.currency === toToken)?.price;
 
       if (fromPrice && toPrice) {
-        setConvertedAmount(((parseFloat(amount) * fromPrice) / toPrice).toFixed(6));
+        setConvertedAmount(((parseFloat(debouncedAmount) * fromPrice) / toPrice).toFixed(6));
       } else {
         setConvertedAmount("0");
       }
     }
-  }, [fromToken, toToken, amount, tokens]);
+  }, [fromToken, toToken, debouncedAmount, tokens]);
 
   // Swap fromToken and toToken
   const handleSwapTokens = () => {
@@ -160,7 +174,6 @@ export default function CurrencySwap() {
             label="Amount to receive"
             value={convertedAmount}
             margin="normal"
-            InputProps={{ readOnly: true }}
           />
 
           {/* Confirm Swap Button */}
