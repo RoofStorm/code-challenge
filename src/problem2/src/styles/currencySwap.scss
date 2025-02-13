@@ -1,0 +1,43 @@
+.swap-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .swap-card {
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .swap-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .swap-button {
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    padding: 5px;
+    transition: background-color 0.2s ease;
+  
+    &:hover {
+      background-color: #d6d6d6;
+    }
+  }
+
+  .swap-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .swap-icon {
+    width: 90px;  
+    height: auto; 
+  }
+  

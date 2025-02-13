@@ -1,0 +1,49 @@
+$light-bg: #ffffff;
+$gray-bg: #d3d3d3;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  transition: background 0.3s ease-in-out;
+  background: url("../assets/light-bg.jpg") center/cover no-repeat;
+
+}
+
+.light-mode {
+  background: $light-bg;
+    background-image: url("../assets/light-bg.jpg");
+    background-size: cover;
+
+}
+
+.gray-mode {
+  background: $gray-bg;
+  background-image: url("../assets/grey-bg.jpg");
+  background-size: cover;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: transparent;
+    color: black; 
+    transition: all 0.3s ease-in-out;
+  
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  // Highlight in gray mode
+  .gray-mode .theme-toggle {
+    color: white; 
+    background-color: rgba(255, 255, 0, 0.2);
+  
+    &:hover {
+      background-color: rgba(255, 255, 0, 0.4);
+    }
+
+    
+  }
+  
